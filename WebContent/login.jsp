@@ -34,7 +34,7 @@
         <form action="${ctx }/login"  method="post">
           <p>
             <label>用户名：</label>
-            <input type="text" name="name" size="20" class="login_input" />
+            <input type="text" name="username" size="20" class="login_input" />
           </p>
           <p>
             <label>密码：</label>

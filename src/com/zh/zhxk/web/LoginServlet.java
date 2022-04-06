@@ -45,6 +45,7 @@ public class LoginServlet extends HttpServlet {
 		Users users = userService.findUSerByName(name);
 		if (users == null || users.getName().equals(password)) {
 			request.getSession().setAttribute("failMsg", "用户名或密码错了");
+			System.out.println();
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}else {
 			request.getSession().setAttribute("realname", users.getRealname());
