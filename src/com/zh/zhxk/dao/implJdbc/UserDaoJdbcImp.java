@@ -24,22 +24,32 @@ public class UserDaoJdbcImp implements UserDao {
 					"FROM scs.users where name = ? ;";
 			PreparedStatement prepareStatement = connection.prepareStatement(sql);
 			prepareStatement.setString(1,name);
+			
+			//System.out.println(prepareStatement.toString());
+			
 			ResultSet resultSet = prepareStatement.executeQuery();
 			if (resultSet.next()) {
 				users = new Users();
 				users.setId(resultSet.getLong(1));
 				users.setName(resultSet.getString(2));
-				users.setName(resultSet.getString(3));
-				users.setName(resultSet.getString(4));
+				users.setPassword(resultSet.getString(3));
+				users.setRealname(resultSet.getString(4));
 				users.setAge(Integer.valueOf(resultSet.getInt(5)));
 				users.setSex(resultSet.getString(6));
 				users.setEmail(resultSet.getString(7));
 			}
+			
+			//System.out.println(users.getId());
 
 		} catch (ClassNotFoundException | SQLException e) {		
 			e.printStackTrace();
 		}
 		return users;
 	}
+//	  public static void main (String[] args) {
+//		UserDaoJdbcImp userDaoJdbcImp = new UserDaoJdbcImp();
+//		Users users = userDaoJdbcImp.findUserByName("admin");
+//		System.out.println(get.realname());
+//	}
 
 }

@@ -7,23 +7,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.zh.zhxk.bean.Users;
-import com.zh.zhxk.service.UserService;
+import com.zh.zhxk.service.TeacherService;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class TeacherListServlet
  */
-@WebServlet("/login")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/teacher_list")
+public class TeacherListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
+	TeacherService teacherService = new TeacherService(); // 建立TeacherService
 	
-	UserService userService = new UserService();
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public TeacherListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,25 +39,8 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String name = request.getParameter("username");
-		String password = request.getParameter("password");
-		Users users = userService.findUSerByName(name);
-		if (users == null || users.getName().equals(password)) {
-			request.getSession().setAttribute("failMsg", "用户名或密码错了");
-			
-			//System.out.println(1);
-			
-			request.getRequestDispatcher("login.jsp").forward(request, response);
-		}else {
-			request.getSession().setAttribute("realname", users.getRealname());
-			
-			//System.out.println(2);
-			
-			//System.out.println(users.getPassword());
+		// TODO Auto-generated method stub
 
-			request.getRequestDispatcher("WEB-INF/views/main.jsp").forward(request, response);
-
-		}
 	}
 
 }
