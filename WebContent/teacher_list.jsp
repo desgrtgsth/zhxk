@@ -1,6 +1,7 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <form id="pagerForm" method="post" action="demo_page1.html">
 	<input type="hidden" name="status" value="${param.status}">
 	<input type="hidden" name="keywords" value="${param.keywords}" />
@@ -56,13 +57,14 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr target="sid_user" rel="1">
-				<td>1</td>
-				<td>A120113196309052434</td>
-				<td>男</td>
-				<td>13013485135</td>
+		<c:forEach items="list" var="teacher" varStatus="status">
+			<tr target="sid_user" rel="${teacher.id }">
+				<td>${status.count }</td>
+				<td>${teacher.name }</td>
+				<td>${teacher.sex }</td>
+				<td>${teacher.phone }</td>
 			</tr>
-			
+			</c:forEach>
 		</tbody>
 	</table>
 	<div class="panelBar">

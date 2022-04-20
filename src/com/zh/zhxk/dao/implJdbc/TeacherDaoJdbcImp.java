@@ -1,36 +1,54 @@
 package com.zh.zhxk.dao.implJdbc;
 
-import java.awt.TextArea;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 import com.zh.zhxk.bean.Teacher;
 import com.zh.zhxk.dao.TeacherDao;
 
 public class TeacherDaoJdbcImp implements TeacherDao {
-	private static final String driver = "com.mysql.jdbc.Driver";
+  private static final String driver = "com.mysql.jdbc.Driver";
     private static final String url = "jdbc:mysql://localhost:3306/scs?CharSet=utf8&useUnicode=true&characterEncoding=utf-8&autoReconnect=true";
-	private static final String username = "root";
-	private static final String password = "123456";
+  private static final String username = "root";
+  private static final String password = "123456";
+  
   @Override
   public ArrayList<Teacher> findAllTeacher() {
-    // TODO Auto-generated method stub
-	  
-	  try {
-			Class.forName(driver);
-			Connection connection = DriverManager.getConnection(url, username , password);
-			String sql = "SELECT id, name, sex, phone FROM scs.teacher";
-			PreparedStatement prepareStatement = connection.prepareStatement(sql);
-			ResultSet resultSet = prepareStatement.executeQuery();
-			while (resultSet.next()) {
-				Teacher teacher = new Teacher();
-				teacher.set();
-			}
-			
-    return null;
+    ArrayList<Teacher> arrayList = new ArrayList<>();
+    try {
+      Class.forName(driver);
+      Connection connection = DriverManager.getConnection(url, username , password);
+      String sql = "SELECT id, name, sex, phone FROM scs.teacher";
+      PreparedStatement prepareStatement = connection.prepareStatement(sql);
+      ResultSet resultSet = prepareStatement.executeQuery();
+      while (resultSet.next()) {
+        Teacher teacher = new Teacher();
+        teacher.setId(resultSet.getLong(1));
+        teacher.setName(resultSet.getString(2));
+        teacher.setSex(resultSet.getString(3));
+        teacher.setPhone(resultSet.getString(4));
+        arrayList.add(teacher);        
+      }
+      }catch (ClassNotFoundException | SQLException e) {    
+        e.printStackTrace();
+      }
+    return arrayList;
   }
-
+  
+  
+public static void main(String[] args) {
+	TeacherDaoJdbcImp teacherDaoJdbcImp = new TeacherDaoJdbcImp();
+	ArrayList<Teacher> list = teacherDaoJdbcImp.findAllTeacher();
+	for (Teacher teacher : list) {
+		System.out.println(teacher.getId());
+		System.out.println(teacher.getName());
+	}
 }
+}
+
+
