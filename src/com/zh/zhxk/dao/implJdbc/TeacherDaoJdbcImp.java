@@ -41,14 +41,45 @@ public class TeacherDaoJdbcImp implements TeacherDao {
   }
   
   
-public static void main(String[] args) {
-	TeacherDaoJdbcImp teacherDaoJdbcImp = new TeacherDaoJdbcImp();
-	ArrayList<Teacher> list = teacherDaoJdbcImp.findAllTeacher();
-	for (Teacher teacher : list) {
-		System.out.println(teacher.getId());
-		System.out.println(teacher.getName());
-	}
-}
+
+
+
+  @Override
+  public ArrayList<Teacher> findTeacher(String name, String sex, String phone) {
+    ArrayList<Teacher> arrayList = new ArrayList<>();
+    try {
+      Class.forName(driver);
+      Connection connection = DriverManager.getConnection(url, username , password);
+      String sql = "SELECT id, name, sex, phone FROM scs.teacher where 1=1";
+      sql += name == "" ? " and 1=? " : " and name = ?";
+      sql += sex == "" ? " and 1=? " : " and sex = ?";
+      sql += phone == "" ? " and 1=? " : " and phone = ?";
+      System.out.println(sql);
+//      PreparedStatement prepareStatement = connection.prepareStatement(sql);
+//      ResultSet resultSet = prepareStatement.executeQuery();
+//      while (resultSet.next()) {
+//        Teacher teacher = new Teacher();
+//        teacher.setId(resultSet.getLong(1));
+//        teacher.setName(resultSet.getString(2));
+//        
+//        teacher.setSex(resultSet.getString(3));
+//        teacher.setPhone(resultSet.getString(4));
+//        arrayList.add(teacher);        
+//      }
+      }catch (ClassNotFoundException | SQLException e) {    
+        e.printStackTrace();
+      }
+    return arrayList;
+  }
+  
+  public static void main(String[] args) {
+    TeacherDaoJdbcImp teacherDaoJdbcImp = new TeacherDaoJdbcImp();
+    ArrayList<Teacher> list = teacherDaoJdbcImp.findTeacher("Li", "", "");
+//    for (Teacher teacher : list) {
+//      System.out.println(teacher.getId());
+//      System.out.println(teacher.getName());
+//    }
+  }
 }
 
 

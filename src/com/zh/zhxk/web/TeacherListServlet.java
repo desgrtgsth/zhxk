@@ -34,13 +34,26 @@ public class TeacherListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	//	String name = request.getParameter("name");
+	//	String sex = request.getParameter("sex");
+	//	String phone = request.getParameter("phone");
+		
 		String name = request.getParameter("name");
-		String sex = request.getParameter("sex");
-		String phone = request.getParameter("phone");
-		
-		
+	    String sex = request.getParameter("sex");
+	    String phone = request.getParameter("phone");
+	    
+	    name = name == null ? "":name.trim();
+	    sex = sex == null ? "":sex;
+	    phone = phone == null ? "": phone.trim();
+	    
 		ArrayList<Teacher> arrayList = null;
-		arrayList = teacherService.findAllTeacher();
+	    
+		if (name == ""&& sex == "" && phone == "") {
+			arrayList = teacherService.findAllTeacher();
+		} else {
+			arrayList = teacherService.findTeacher(name,sex,phone); //建立findTeacher方法
+		}
+	    		
 		
 //		for(Teacher teacher : arrayList) {
 //			System.out.println(teacher.getId());

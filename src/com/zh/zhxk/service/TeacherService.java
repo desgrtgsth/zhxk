@@ -12,5 +12,10 @@ private TeacherDao teacherDao = new TeacherDaoJdbcImp();
   public ArrayList<Teacher> findAllTeacher() {
     return teacherDao.findAllTeacher();
   }
+
+public ArrayList<Teacher> findTeacher(String name, String sex, String phone) {
+	// TODO Auto-generated method stub
+	return teacherDao.findTeacher(name,sex,phone); //在teacherdao建立findTeacher
+}
   
 }
