@@ -55,7 +55,23 @@ public class TeacherDaoJdbcImp implements TeacherDao {
       sql += sex == "" ? " and 1=? " : " and sex = ?";
       sql += phone == "" ? " and 1=? " : " and phone = ?";
       System.out.println(sql);
-//      PreparedStatement prepareStatement = connection.prepareStatement(sql);
+      PreparedStatement prepareStatement = connection.prepareStatement(sql);
+      if (name == "") {
+        prepareStatement.setInt(1, 1);
+      } else {
+        prepareStatement.setString(1, name);
+      }
+      if (sex == "") {
+        prepareStatement.setInt(2, 1);
+      } else {
+        prepareStatement.setString(2, sex);
+      }
+      if (phone == "") {
+        prepareStatement.setInt(3, 1);
+      } else {
+        prepareStatement.setString(3, phone);
+      }
+      System.out.println(prepareStatement.toString());
 //      ResultSet resultSet = prepareStatement.executeQuery();
 //      while (resultSet.next()) {
 //        Teacher teacher = new Teacher();
@@ -74,7 +90,7 @@ public class TeacherDaoJdbcImp implements TeacherDao {
   
   public static void main(String[] args) {
     TeacherDaoJdbcImp teacherDaoJdbcImp = new TeacherDaoJdbcImp();
-    ArrayList<Teacher> list = teacherDaoJdbcImp.findTeacher("Li", "", "");
+    ArrayList<Teacher> list = teacherDaoJdbcImp.findTeacher("Li", "", "123");
 //    for (Teacher teacher : list) {
 //      System.out.println(teacher.getId());
 //      System.out.println(teacher.getName());
