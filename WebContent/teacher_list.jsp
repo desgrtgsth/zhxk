@@ -57,7 +57,7 @@
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach items="list" var="teacher" varStatus="status">
+		<c:forEach items="${list }" var="teacher" varStatus="status">
 			<tr target="sid_user" rel="${teacher.id }">
 				<td>${status.count }</td>
 				<td>${teacher.name }</td>

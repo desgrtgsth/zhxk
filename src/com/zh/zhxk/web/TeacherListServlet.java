@@ -34,18 +34,28 @@ public class TeacherListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String name = request.getParameter("name");
+		String sex = request.getParameter("sex");
+		String phone = request.getParameter("phone");
+		
+		
+		ArrayList<Teacher> arrayList = null;
+		arrayList = teacherService.findAllTeacher();
+		
+//		for(Teacher teacher : arrayList) {
+//			System.out.println(teacher.getId());
+//			System.out.println(teacher.getName());
+//		}   //调试
+		
+		request.setAttribute("list", arrayList);
+		request.getRequestDispatcher("/teacher_list.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Teacher> arrayList = null;
-		arrayList = teacherService.findAllTeacher();
-		request.setAttribute("list", arrayList);
-		request.getRequestDispatcher("/teacher_list.jsp").forward(request, response);
+		
 
 	}
 
