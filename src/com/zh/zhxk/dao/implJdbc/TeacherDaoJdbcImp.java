@@ -13,7 +13,7 @@ import com.zh.zhxk.dao.TeacherDao;
 
 public class TeacherDaoJdbcImp implements TeacherDao {
   private static final String driver = "com.mysql.jdbc.Driver";
-    private static final String url = "jdbc:mysql://localhost:3306/scs?CharSet=utf8&useUnicode=true&characterEncoding=utf-8&autoReconnect=true";
+  private static final String url = "jdbc:mysql://localhost:3306/scs?CharSet=utf8&useUnicode=true&characterEncoding=utf-8&autoReconnect=true";
   private static final String username = "root";
   private static final String password = "123456";
   
@@ -54,7 +54,8 @@ public class TeacherDaoJdbcImp implements TeacherDao {
       sql += name == "" ? " and 1=? " : " and name = ?";
       sql += sex == "" ? " and 1=? " : " and sex = ?";
       sql += phone == "" ? " and 1=? " : " and phone = ?";
-      System.out.println(sql);
+      System.out.println(sql);//测试
+      
       PreparedStatement prepareStatement = connection.prepareStatement(sql);
       if (name == "") {
         prepareStatement.setInt(1, 1);
@@ -71,31 +72,68 @@ public class TeacherDaoJdbcImp implements TeacherDao {
       } else {
         prepareStatement.setString(3, phone);
       }
-      System.out.println(prepareStatement.toString());
-//      ResultSet resultSet = prepareStatement.executeQuery();
-//      while (resultSet.next()) {
-//        Teacher teacher = new Teacher();
-//        teacher.setId(resultSet.getLong(1));
-//        teacher.setName(resultSet.getString(2));
-//        
-//        teacher.setSex(resultSet.getString(3));
-//        teacher.setPhone(resultSet.getString(4));
-//        arrayList.add(teacher);        
-//      }
+      System.out.println(prepareStatement.toString());//测试
+      
+     ResultSet resultSet = prepareStatement.executeQuery();
+     while (resultSet.next()) {
+        Teacher teacher = new Teacher();
+        teacher.setId(resultSet.getLong(1));
+        teacher.setName(resultSet.getString(2));
+        
+        teacher.setSex(resultSet.getString(3));
+        teacher.setPhone(resultSet.getString(4));
+        arrayList.add(teacher);        
+      }
       }catch (ClassNotFoundException | SQLException e) {    
         e.printStackTrace();
       }
     return arrayList;
   }
+
+
+
+
+
+  @Override
+  public void saveOrUpdate(Teacher teacher) {
+    try {
+      Class.forName(driver);
+      Connection connection = DriverManager.getConnection(url, username , password);
+      String sql = "INSERT INTO scs.teacher ( name, sex, phone) VALUES (?, ?, ?);";
+      PreparedStatement prepareStatement = connection.prepareStatement(sql);
+      prepareStatement.setString(1, teacher.getName());
+      prepareStatement.setString(2, teacher.getSex());
+      prepareStatement.setString(3, teacher.getPhone());
+       int executeUpdate = prepareStatement.executeUpdate();
+      
+      }catch (ClassNotFoundException | SQLException e) {    
+        e.printStackTrace();
+        throw new RuntimeException();
+      }
+
+  }
+  
   
   public static void main(String[] args) {
     TeacherDaoJdbcImp teacherDaoJdbcImp = new TeacherDaoJdbcImp();
-    ArrayList<Teacher> list = teacherDaoJdbcImp.findTeacher("Li", "", "123");
+    Teacher teacher = new Teacher();
+    teacher.setName("gu");
+    teacher.setPhone("5656767767");
+    teacher.setSex("女");
+    teacherDaoJdbcImp.saveOrUpdate(teacher);
+
+  }
+
+}
+  
+// public static void main(String[] args) {
+//    TeacherDaoJdbcImp teacherDaoJdbcImp = new TeacherDaoJdbcImp();
+//    ArrayList<Teacher> list = teacherDaoJdbcImp.findTeacher("Li", "", "123");
 //    for (Teacher teacher : list) {
 //      System.out.println(teacher.getId());
 //      System.out.println(teacher.getName());
-//    }
-  }
-}
+//    }//测试
+//  }
+
 
 
