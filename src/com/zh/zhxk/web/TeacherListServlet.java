@@ -50,6 +50,7 @@ public class TeacherListServlet extends HttpServlet {
 	    
 		if (name == ""&& sex == "" && phone == "") {
 			arrayList = teacherService.findAllTeacher();
+			System.out.println(arrayList);
 		} else {
 			arrayList = teacherService.findTeacher(name,sex,phone); //建立findTeacher方法
 		}

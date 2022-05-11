@@ -30,6 +30,12 @@ public class TeacherAddServlet extends HttpServlet {
    * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
    */
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    String idString = request.getParameter("id");
+    if (idString != null) {
+      long id = Long.valueOf(idString);
+      Teacher teacher = teacherService.findTeacherById(id);
+      request.setAttribute("teacher", teacher);
+    }  
     request.getRequestDispatcher("/resources/common/teacher_add.jsp").forward(request, response);
   }
 
@@ -38,10 +44,14 @@ public class TeacherAddServlet extends HttpServlet {
    */
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     Teacher teacher = new Teacher();
+    String idString = request.getParameter("id");
     String name = request.getParameter("name");
     String phone = request.getParameter("phone");
     String sex = request.getParameter("sex");
-    
+    if (idString != "" ) {
+      Long id = Long.valueOf(idString);
+      teacher.setId(id);
+    }
     teacher.setName(name);
     teacher.setPhone(phone);
     teacher.setSex(sex);

@@ -113,18 +113,66 @@ public class TeacherDaoJdbcImp implements TeacherDao {
 
   }
   
-  
+  @Override
+  public Teacher findTeacherById(Long id) {
+    Teacher teacher = null;
+    try {
+      Class.forName(driver);
+      Connection connection = DriverManager.getConnection(url, username , password);
+      String sql = "SELECT id, name, sex, phone FROM scs.teacher where id = ?";
+      PreparedStatement prepareStatement = connection.prepareStatement(sql);
+      prepareStatement.setLong(1, id);
+      ResultSet resultSet = prepareStatement.executeQuery();
+      if (resultSet.next()) {
+         teacher = new Teacher();
+         teacher.setId(resultSet.getLong(1));
+         teacher.setName(resultSet.getString(2));
+        
+         teacher.setSex(resultSet.getString(3));
+         teacher.setPhone(resultSet.getString(4));    
+      }
+      }catch (ClassNotFoundException | SQLException e) {    
+        e.printStackTrace();
+      }
+    return teacher;
+  }
+
   public static void main(String[] args) {
     TeacherDaoJdbcImp teacherDaoJdbcImp = new TeacherDaoJdbcImp();
-    Teacher teacher = new Teacher();
-    teacher.setName("gu");
-    teacher.setPhone("5656767767");
-    teacher.setSex("女");
+    
+    Teacher teacher = teacherDaoJdbcImp.findTeacherById(4L);
+    System.out.println(teacher.getName());
+    System.out.println(teacher.getSex());
+    System.out.println(teacher.getPhone());
+    teacher.setSex("男");
     teacherDaoJdbcImp.saveOrUpdate(teacher);
+    System.out.println(teacher.getName());
+    System.out.println(teacher.getSex());
+    System.out.println(teacher.getPhone());
 
   }
 
 }
+
+  //public static void main(String[] args) {
+  //  TeacherDaoJdbcImp teacherDaoJdbcImp = new TeacherDaoJdbcImp();
+  //  Teacher teacher = teacherDaoJdbcImp.findTeacherById(4L);
+  //  System.out.println(teacher.getName());
+  //  System.out.println(teacher.getPhone());
+
+  //}
+  
+  // public static void main(String[] args) {
+  //  TeacherDaoJdbcImp teacherDaoJdbcImp = new TeacherDaoJdbcImp();
+  //  Teacher teacher = new Teacher();
+  //  teacher.setName("gu");
+  //  teacher.setPhone("5656767767");
+  // teacher.setSex("女");
+  // teacherDaoJdbcImp.saveOrUpdate(teacher);
+
+  // }
+
+//}
   
 // public static void main(String[] args) {
 //    TeacherDaoJdbcImp teacherDaoJdbcImp = new TeacherDaoJdbcImp();

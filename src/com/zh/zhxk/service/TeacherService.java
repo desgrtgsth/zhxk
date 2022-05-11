@@ -20,5 +20,9 @@ public ArrayList<Teacher> findTeacher(String name, String sex, String phone) {
 public  void saveOrUpdate(Teacher teacher) {
 	teacherDao.saveOrUpdate(teacher);
 }
+
+public Teacher findTeacherById(long id) {
+	return teacherDao.findTeacherById(id);
+}
   
 }

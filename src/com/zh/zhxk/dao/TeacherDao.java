@@ -11,6 +11,8 @@ public interface TeacherDao {
 
 	ArrayList<Teacher> findTeacher(String name, String sex, String phone);//建立findTeacher
 
-	void saveOrUpdate(Teacher teacher); 
+	void saveOrUpdate(Teacher teacher);
+
+	Teacher findTeacherById(Long id); 
 	
 }

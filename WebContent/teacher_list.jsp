@@ -11,6 +11,7 @@
 </form>
 
 
+
 <div class="pageHeader">
 	<form onsubmit="return navTabSearch(this);" action="${ctx }/teacher_list" method="post">
 	<div class="searchBar">
@@ -44,7 +45,7 @@
 		<ul class="toolBar">
 			<li><a class="add" href="${ctx }/teacher_add" target="dialog"><span>添加</span></a></li>
 			<li><a class="delete" href="demo/common/ajaxDone.html?uid={sid_user}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
-			<li><a class="edit" href="demo_page4.html?uid={sid_user}" target="navTab"><span>修改</span></a></li>
+			<li><a class="edit" href="${ctx }/teacher_add?id={sid_user}" target="navTab"><span>修改</span></a></li>
 		</ul>
 	</div>
 	<table class="table" width="100%" layoutH="138">

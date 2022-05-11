@@ -1,25 +1,24 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <div class="pageContent">
-  <form method="post" action="${ctx }/teacher_add" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone);">
-    <input type="hidden" name="id" />
+<form method="post" action="${ctx }/teacher_add" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">    <input type="hidden" name="id" value="${teacher.id }"/>
     <input type="hidden" name="dtype" /><!--要么是student，要么是管理员-->
     <div class="pageFormContent" layoutH="56">
       <p>
         <label>姓名：</label>
-        <input name="name" type="text" size="30" value="" class="required"/>
+        <input name="name" type="text" size="30" value="${teacher.name }" class="required"/>
       </p>
       
       <p>
         <label>电话号码：</label>
-        <input type="text"  value="" name="phone" >
+        <input type="text"  value="${teacher.phone }" name="phone" >
       </p>
       <p>
         <label>性别：</label>
         <select name="sex" class="required combox">
           <option value="">请选择</option>
-          <option value="女">女</option>
-          <option value="男">男</option>
+          <option value="女" ${teacher.sex=='女'?'selected':'' }>女</option>
+          <option value="男" ${teacher.sex=='男'?'selected':'' }>男</option>
         </select>
       </p>
     </div>
